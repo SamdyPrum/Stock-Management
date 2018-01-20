@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <scriptsrc="//code.jquery.com/jquery-1.12.0.min.js">  
+  </script>  
+  <scriptsrc="//code.jquery.com/jquery-migrate-1.2.1.min.js">  
+  </script>  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Admin Dashboard</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="http://127.0.0.1:8000/stockmanagement">Stock Management</a></li>
+      <li><a href="http://127.0.0.1:8000/user">User Manage</a></li>
+      <li><a href="http://127.0.0.1:8000/viewstock">View Stock</a></li>
+      <li><a href="http://127.0.0.1:8000/customermanagement">Coutomer Management</a></li>
+      <li class="active"><a href="http://127.0.0.1:8000/invoicemanagement">Invoice Management</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://127.0.0.1:8000/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+      </ul>
+  </div>
+</nav>
+<div class="container">
+  <br>
+  <br>
+  <br>
+  <br>   
+     <form action="" method="POST">  
+       <div class="box box-primary">  
+           <div class="box-header">  
+                  <h3 class="box-title">Invoice </h3>  
+            </div>  
+              <div class="box-body">  
+                  <div class="form-group">  
+                                Customer Name  
+                                <input type="text" name="name" class="form-control" style="width: 200px;">  
+                            </div> 
+                        </div>  
+                         
+                    </div><br/>  
+                    <table class="table table-bordered table-hover">  
+                        <thead>  
+                           
+                            <th>Product Name</th>  
+                            <th>Quantity</th>  
+                            <th>Price</th>  
+                            <th>Discount</th>  
+                  
+                            <th><input type="button" value="+" id="add" class="btnbtn-primary" onclick="javascript:add()"></th>  
+                        </thead>  
+
+            <script language="javascript">
+                function addNumbers()
+                {
+                        var val1 = parseInt(document.getElementById("value1").value);
+                        var val2 = parseInt(document.getElementById("value2").value);
+                        var val3 = parseInt(document.getElementById("value3").value);
+                        var ansD = document.getElementById("answer");
+                        ansD.value = val1 * val2 ;
+                }
+           </script>
+                        <tbody class="detail">  
+                            <tr>  
+                               
+                                <td><input type="text" class="form-control productname" name="productname[]"></td>  
+                                <td><input type="text" class="form-control quantity" name="quantity[]" id="value1" name="value1"></td>  
+                                <td><input type="text" class="form-control price" name="price[]" id="value2" name="value2"></td>  
+                                <td><input type="text" class="form-control discount" name="discount[]" id="value3" name="value3"></td>  
+                                <td><a href="#" class="remove">Delete</td></a>
+                               
+
+</tr>  
+</tbody>  
+<tfoot>  
+<th></th>  
+<th></th>  
+<th></th>  
+<th><input type="button" name="Sumbit" value="Calculat" onclick="javascript:addNumbers()"></th>  
+<th style="text-align:center;" class="total"><input type="text" id="answer" name="answer" value=""/><b></b></th>   
+ 
+</tfoot>  
+  
+</table>  
+</form>  
+<div class="form-group">
+  <div class="col-md-4">
+    <input type="submit" class="btn btn-primary" name="save" value="Save Record"> 
+    <a class="btn btn-info" href="http://127.0.0.1:8000/viewinvoice" role="button">View Invoice</a>
+  </div>
+</body>  
+</html>  
+<script type="text/javascript">  
+$(function()  
+{  
+$('add').click(function()  
+{  
+addnewrow();  
+});  
+$('body').delegate('.remove','click',function()  
+{  
+$(this).parent().parent().remove();  
+});  
+$('body').delegate('.quantity,.price,.discount','keyup',function()  
+{  
+vartr=$(this).parent().parent();  
+varqty=tr.find('.quantity').val();  
+var price=tr.find('.price').val();  
+  
+var dis=tr.find('.discount').val();  
+varamt =(qty * price)-(qty * price *dis)/100;  
+tr.find('.amount').val(amt);  
+total();  
+});  
+});  
+function total()  
+{  
+var t=0;  
+$('.amount').each(function(i,e)   
+{  
+varamt =$(this).val()-0;  
+t+=amt;  
+});  
+$('.total').html(t);  
+}  
+function addnewrow()   
+{  
+var n=($('.detail tr').length-0)+1;  
+vartr = '<tr>'+  
+'<td><input type="text" class="form-control productname" name="productname[]"></td>'+  
+'<td><input type="text" class="form-control quantity" name="quantity[]"></td>'+  
+'<td><input type="text" class="form-control price" name="price[]"></td>'+  
+'<td><input type="text" class="form-control discount" name="discount[]"></td>'+    
+'<td><a href="#" class="remove">Delete</td>'+  
+'</tr>';  
+$('.detail').append(tr);   
+}  
+</script>  
+</dev>
+</body>
+</html>
+{% endblock %}
